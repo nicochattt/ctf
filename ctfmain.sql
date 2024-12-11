@@ -23,15 +23,15 @@ USE `ctfmain` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `ctfmain`.`chalenge` ;
 
-CREATE TABLE IF NOT EXISTS `ctfmain`.`chalenge` (
-  `idchalenge` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `ctfmain`.`challenge` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NULL,
   `description` VARCHAR(255) NULL,
   `category` VARCHAR(45) NULL,
-  `dificutly` VARCHAR(45) NULL,
+  `difficulty` VARCHAR(45) NULL,
   `point` INT NULL,
   `flag` VARCHAR(255) NULL,
-  PRIMARY KEY (`idchalenge`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -41,22 +41,22 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ctfmain`.`score` ;
 
 CREATE TABLE IF NOT EXISTS `ctfmain`.`score` (
-  `idscore` INT NOT NULL,
-  `user_iduser` INT NOT NULL,
-  `chalenge_idchalenge` INT NOT NULL,
+  `id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `challenge_id` INT NOT NULL,
   `attempts` INT NULL,
   `status` VARCHAR(45) NULL,
-  PRIMARY KEY (`idscore`, `user_iduser`, `chalenge_idchalenge`),
-  INDEX `fk_score_user_idx` (`user_iduser` ASC) VISIBLE,
-  INDEX `fk_score_chalenge1_idx` (`chalenge_idchalenge` ASC) VISIBLE,
+  PRIMARY KEY (`id`, `user_id`, `challenge_id`),
+  INDEX `fk_score_user_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_score_challenge_idx` (`challenge_id` ASC) VISIBLE,
   CONSTRAINT `fk_score_user`
-    FOREIGN KEY (`user_iduser`)
-    REFERENCES `ctfmain`.`user` (`iduser`)
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ctfmain`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_score_chalenge1`
-    FOREIGN KEY (`chalenge_idchalenge`)
-    REFERENCES `ctfmain`.`chalenge` (`idchalenge`)
+  CONSTRAINT `fk_score_challenge`
+    FOREIGN KEY (`challenge_id`)
+    REFERENCES `ctfmain`.`challenge` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -68,22 +68,22 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ctfmain`.`submitted_flags` ;
 
 CREATE TABLE IF NOT EXISTS `ctfmain`.`submitted_flags` (
-  `idsubmitted_flags` INT NOT NULL,
-  `user_iduser` INT NOT NULL,
-  `chalenge_idchalenge` INT NOT NULL,
+  `id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `challenge_id` INT NOT NULL,
   `submitted_flags` VARCHAR(255) NULL,
-  `is_corect` TINYINT NULL,
-  PRIMARY KEY (`idsubmitted_flags`, `user_iduser`, `chalenge_idchalenge`),
-  INDEX `fk_submitted_flags_user1_idx` (`user_iduser` ASC) VISIBLE,
-  INDEX `fk_submitted_flags_chalenge1_idx` (`chalenge_idchalenge` ASC) VISIBLE,
-  CONSTRAINT `fk_submitted_flags_user1`
-    FOREIGN KEY (`user_iduser`)
-    REFERENCES `ctfmain`.`user` (`iduser`)
+  `is_correct` TINYINT NULL,
+  PRIMARY KEY (`id`, `user_id`, `challenge_id`),
+  INDEX `fk_submitted_flags_user_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_submitted_flags_challenge_idx` (`challenge_id` ASC) VISIBLE,
+  CONSTRAINT `fk_submitted_flags_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ctfmain`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_submitted_flags_chalenge1`
-    FOREIGN KEY (`chalenge_idchalenge`)
-    REFERENCES `ctfmain`.`chalenge` (`idchalenge`)
+  CONSTRAINT `fk_submitted_flags_challenge`
+    FOREIGN KEY (`challenge_id`)
+    REFERENCES `ctfmain`.`challenge` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -95,13 +95,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ctfmain`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `ctfmain`.`user` (
-  `iduser` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR(45) NOT NULL,
   `lastname` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`iduser`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
